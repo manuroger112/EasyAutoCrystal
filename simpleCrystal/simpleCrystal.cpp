@@ -5,7 +5,6 @@
 
 //kept it as barebone and simple as possible, maybe I will update it in the future to offer more features :) 
 
-
 void moveMouse(int x, int y, int smoothnessCoefficient) {
     x /= smoothnessCoefficient;
     y /= smoothnessCoefficient;
@@ -53,6 +52,9 @@ int main()
     WORD ObbyHotbarKey = 0x32;
     WORD SwordHotbarKey = 0x33;
 
+    WORD EndProgramKey = VK_INSERT;
+    WORD AutoCrystalKey = VK_XBUTTON1;
+
     std::srand(std::time(0));
     int delay = 5 + std::rand() % 14;
     int placeBlocks = true;
@@ -60,11 +62,11 @@ int main()
     while (true) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
-        if (GetAsyncKeyState(VK_INSERT) & 1) {
+        if (GetAsyncKeyState(EndProgramKey) & 1) {
             break;
         }
 
-        if (GetAsyncKeyState(VK_XBUTTON1) < 0 || GetAsyncKeyState(VK_XBUTTON1) & 1) {
+        if (GetAsyncKeyState(AutoCrystalKey) < 0 || GetAsyncKeyState(AutoCrystalKey) & 1) {
             if (placeBlocks == true) {
                 placeBlocks = false;
 
@@ -85,7 +87,7 @@ int main()
             moveMouse(0, 800, 2);
         }
 
-        else if(GetAsyncKeyState(VK_XBUTTON1) == 0 && placeBlocks != true){
+        else if(GetAsyncKeyState(AutoCrystalKey) == 0 && placeBlocks != true){
             pressKey(SwordHotbarKey);
             placeBlocks = true;
             delay = 5 + std::rand() % 14;
